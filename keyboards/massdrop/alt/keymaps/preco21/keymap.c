@@ -209,18 +209,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 TOGGLE_FLAG_AND_PRINT(usb_gcr_auto, "USB GCR auto mode");
             }
             return false;
-        case DBG_FAC:
-            if (record->event.pressed && MODS_SHIFT && MODS_CTRL) {
-                led_lighting_mode = LED_MODE_NORMAL;
-                led_edge_brightness = 1;
-                led_edge_mode = LED_EDGE_MODE_ALL;
-                led_animation_breathing = 0;
-                led_animation_id = 7; //led_programs.c led_setups leds_white index
-                gcr_desired = LED_GCR_MAX;
-                led_enabled = 1;
-                I2C3733_Control_Set(led_enabled);
-            }
-            return false;
         case MD_BOOT:
             if (record->event.pressed) {
                 key_timer = timer_read32();
