@@ -221,26 +221,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 I2C3733_Control_Set(led_enabled);
             }
             return false;
-        case DBG_TOG:
-            if (record->event.pressed) {
-                TOGGLE_FLAG_AND_PRINT(debug_enable, "Debug mode");
-            }
-            return false;
-        case DBG_MTRX:
-            if (record->event.pressed) {
-                TOGGLE_FLAG_AND_PRINT(debug_matrix, "Debug matrix");
-            }
-            return false;
-        case DBG_KBD:
-            if (record->event.pressed) {
-                TOGGLE_FLAG_AND_PRINT(debug_keyboard, "Debug keyboard");
-            }
-            return false;
-        case DBG_MOU:
-            if (record->event.pressed) {
-                TOGGLE_FLAG_AND_PRINT(debug_mouse, "Debug mouse");
-            }
-            return false;
         case MD_BOOT:
             if (record->event.pressed) {
                 key_timer = timer_read32();
