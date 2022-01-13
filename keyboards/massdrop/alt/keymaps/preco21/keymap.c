@@ -32,7 +32,7 @@ enum layers {
     _MAC_MOD,
     _WIN,
     _WIN_MOD
-}
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MAC] = LAYOUT(
