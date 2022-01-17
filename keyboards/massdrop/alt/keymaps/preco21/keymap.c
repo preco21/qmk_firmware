@@ -24,7 +24,8 @@ enum alt_keycodes {
     DBG_KBD,            //DEBUG Toggle Keyboard Prints                              //
     DBG_MOU,            //DEBUG Toggle Mouse Prints                                 //
     DBG_FAC,            //DEBUG Factory light testing (All on white)
-    MD_BOOT             //Restart into bootloader after hold timeout                //Working
+    MD_BOOT,            //Restart into bootloader after hold timeout                //Working
+    MD_RESET            //Reset EEPROM settings
 };
 
 enum layers {
@@ -57,11 +58,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______,                            _______,                            __MACCTL, _______, KC_HOME, KC_PGDN, KC_END
     ),
     [_MAC_CTRL_LAYER] = LAYOUT(
-        _______, _______, _______, _______,  _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______,
-        L_T_BR,  L_PSD,   L_BRI,   L_PSI,    L_EDG_I, _______, _______, _______, U_T_AGCR, _______, _______, _______, _______, _______, _______,
-        L_T_PTD, L_PTP,   L_BRD,   L_PTN,    L_EDG_D, _______, _______, _______, _______,  _______, _______, _______,          _______, _______,
-        _______, L_T_MD,  L_T_ONF, DF(_WIN), L_EDG_M, MD_BOOT, NK_TOGG, _______, _______,  _______, _______, _______,          _______, _______,
-        _______, _______, _______,                             _______,                             _______, _______, _______, _______, _______
+        _______, _______, _______, _______,  _______, _______, _______,  _______, _______,  _______, _______, _______, _______, _______, _______,
+        L_T_BR,  L_PSD,   L_BRI,   L_PSI,    L_EDG_I, _______, _______,  _______, U_T_AGCR, _______, _______, _______, _______, _______, _______,
+        L_T_PTD, L_PTP,   L_BRD,   L_PTN,    L_EDG_D, _______, MD_RESET, _______, _______,  _______, _______, _______,          _______, _______,
+        _______, L_T_MD,  L_T_ONF, DF(_WIN), L_EDG_M, MD_BOOT, NK_TOGG,  _______, _______,  _______, _______, _______,          _______, _______,
+        _______, _______, _______,                             _______,                              _______, _______, _______, _______, _______
     ),
     [_WIN] = LAYOUT(
         KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,  KC_EQL,  KC_BSPC, KC_DEL,
@@ -78,11 +79,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______,                            _______,                            __WINCTL, _______, KC_HOME, KC_PGDN, KC_END
     ),
     [_WIN_CTRL_LAYER] = LAYOUT(
-        _______,  _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______,
-        L_T_BR,  L_PSD,   L_BRI,   L_PSI,    L_EDG_I, _______, _______, _______, U_T_AGCR, _______, _______, _______, _______, _______, _______,
-        L_T_PTD, L_PTP,   L_BRD,   L_PTN,    L_EDG_D, _______, _______, _______, _______,  _______, _______, _______,          _______, _______,
-        _______, L_T_MD,  L_T_ONF, DF(_MAC), L_EDG_M, MD_BOOT, NK_TOGG, _______, _______,  _______, _______, _______,          _______, _______,
-        _______, _______, _______,                             _______,                             _______, _______, _______, _______, _______
+        _______,  _______, _______, _______, _______, _______, _______, _______,  _______,  _______, _______, _______, _______, _______, _______,
+        L_T_BR,  L_PSD,   L_BRI,   L_PSI,    L_EDG_I, _______, _______, _______,  U_T_AGCR, _______, _______, _______, _______, _______, _______,
+        L_T_PTD, L_PTP,   L_BRD,   L_PTN,    L_EDG_D, _______, MD_RESET, _______, _______,  _______, _______, _______,          _______, _______,
+        _______, L_T_MD,  L_T_ONF, DF(_MAC), L_EDG_M, MD_BOOT, NK_TOGG, _______,  _______,  _______, _______, _______,          _______, _______,
+        _______, _______, _______,                             _______,                              _______, _______, _______, _______, _______
     ),
 };
 
@@ -92,15 +93,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint32_t key_timer;
+    static uint16_t last_active_md_key;
     static uint8_t scroll_effect = 0;
-
-    switch (keycode) {
-        case L_BRI ... U_T_AGCR:
-            if (record->event.pressed) {
-                md_led_changed();
-            }
-            break;
-    }
 
     switch (keycode) {
         // adds extra R-CTRL keypress on mac control layer is active
@@ -113,6 +107,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
         case L_BRI:
             if (record->event.pressed) {
+                md_led_changed();
                 if (LED_GCR_STEP > LED_GCR_MAX - gcr_desired) gcr_desired = LED_GCR_MAX;
                 else gcr_desired += LED_GCR_STEP;
                 if (led_animation_breathing) gcr_breathe = gcr_desired;
@@ -120,6 +115,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case L_BRD:
             if (record->event.pressed) {
+                md_led_changed();
                 if (LED_GCR_STEP > gcr_desired) gcr_desired = 0;
                 else gcr_desired -= LED_GCR_STEP;
                 if (led_animation_breathing) gcr_breathe = gcr_desired;
@@ -127,6 +123,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case L_EDG_M:
             if (record->event.pressed) {
+                md_led_changed();
                 led_edge_mode++;
                 if (led_edge_mode > LED_EDGE_MODE_MAX) {
                     led_edge_mode = LED_EDGE_MODE_ALL;
@@ -135,77 +132,90 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case L_EDG_I:
             if (record->event.pressed) {
+                md_led_changed();
                 led_edge_brightness += 0.1;
                 if (led_edge_brightness > 1) { led_edge_brightness = 1; }
             }
             return false;
         case L_EDG_D:
             if (record->event.pressed) {
+                md_led_changed();
                 led_edge_brightness -= 0.1;
                 if (led_edge_brightness < 0) { led_edge_brightness = 0; }
             }
             return false;
         case L_RATIOI:
             if (record->event.pressed) {
+                md_led_changed();
                 led_ratio_brightness += 0.2;
                 if (led_ratio_brightness > 2.0) { led_ratio_brightness = 2.0; }
             }
             return false;
         case L_RATIOD:
             if (record->event.pressed) {
+                md_led_changed();
                 led_ratio_brightness -= 0.2;
                 if (led_ratio_brightness < 0.0) { led_ratio_brightness = 0.0; }
             }
             return false;
         case L_PTN:
             if (record->event.pressed) {
+                md_led_changed();
                 if (led_animation_id == led_setups_count - 1) led_animation_id = 0;
                 else led_animation_id++;
             }
             return false;
         case L_PTP:
             if (record->event.pressed) {
+                md_led_changed();
                 if (led_animation_id == 0) led_animation_id = led_setups_count - 1;
                 else led_animation_id--;
             }
             return false;
         case L_PSI:
             if (record->event.pressed) {
+                md_led_changed();
                 led_animation_speed += ANIMATION_SPEED_STEP;
             }
             return false;
         case L_PSD:
             if (record->event.pressed) {
+                md_led_changed();
                 led_animation_speed -= ANIMATION_SPEED_STEP;
                 if (led_animation_speed < 0) led_animation_speed = 0;
             }
             return false;
         case L_T_MD:
             if (record->event.pressed) {
+                md_led_changed();
                 led_lighting_mode++;
                 if (led_lighting_mode > LED_MODE_MAX_INDEX) led_lighting_mode = LED_MODE_NORMAL;
             }
             return false;
         case L_T_ONF:
             if (record->event.pressed) {
+                md_led_changed();
                 led_enabled = !led_enabled;
                 I2C3733_Control_Set(led_enabled);
             }
             return false;
         case L_ON:
             if (record->event.pressed) {
+                md_led_changed();
                 led_enabled = 1;
                 I2C3733_Control_Set(led_enabled);
             }
             return false;
         case L_OFF:
             if (record->event.pressed) {
+                md_led_changed();
                 led_enabled = 0;
                 I2C3733_Control_Set(led_enabled);
             }
             return false;
         case L_T_BR:
             if (record->event.pressed) {
+                md_led_changed();
                 led_animation_breathing = !led_animation_breathing;
                 if (led_animation_breathing) {
                     gcr_breathe = gcr_desired;
@@ -216,46 +226,74 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case L_T_PTD:
             if (record->event.pressed) {
+                md_led_changed();
                 scroll_effect++;
-                if (scroll_effect == 1) {               //Patterns with scroll move horizontal (Right to left)
-                    led_animation_direction = 1;
-                    led_animation_orientation = 0;
-                    led_animation_circular = 0;
-                } else if (scroll_effect == 2) {        //Patterns with scroll move vertical (Top to bottom)
-                    led_animation_direction = 1;
-                    led_animation_orientation = 1;
-                    led_animation_circular = 0;
-                } else if (scroll_effect == 3) {        //Patterns with scroll move vertical (Bottom to top)
-                    led_animation_direction = 0;
-                    led_animation_orientation = 1;
-                    led_animation_circular = 0;
-                } else if (scroll_effect == 4) {        //Patterns with scroll explode from center
-                    led_animation_direction = 0;
-                    led_animation_orientation = 0;
-                    led_animation_circular = 1;
-                } else if (scroll_effect == 5) {        //Patterns with scroll implode on center
-                    led_animation_direction = 1;
-                    led_animation_orientation = 0;
-                    led_animation_circular = 1;
-                } else {                                //Patterns with scroll move horizontal (Left to right)
-                    scroll_effect = 0;
-                    led_animation_direction = 0;
-                    led_animation_orientation = 0;
-                    led_animation_circular = 0;
+                switch (scroll_effect) {
+                    case 1:
+                        //Patterns with scroll move horizontal (Right to left)
+                        led_animation_direction = 1;
+                        led_animation_orientation = 0;
+                        led_animation_circular = 0;
+                        break;
+                    case 2:
+                        //Patterns with scroll move vertical (Top to bottom)
+                        led_animation_direction = 1;
+                        led_animation_orientation = 1;
+                        led_animation_circular = 0;
+                        break;
+                    case 3:
+                        //Patterns with scroll move vertical (Bottom to top)
+                        led_animation_direction = 0;
+                        led_animation_orientation = 1;
+                        led_animation_circular = 0;
+                        break;
+                    case 4:
+                        //Patterns with scroll explode from center
+                        led_animation_direction = 0;
+                        led_animation_orientation = 0;
+                        led_animation_circular = 1;
+                        break;
+                    case 5:
+                        //Patterns with scroll implode on center
+                        led_animation_direction = 1;
+                        led_animation_orientation = 0;
+                        led_animation_circular = 1;
+                        break;
+                    default:
+                        //Patterns with scroll move horizontal (Left to right)
+                        scroll_effect = 0;
+                        led_animation_direction = 0;
+                        led_animation_orientation = 0;
+                        led_animation_circular = 0;
+                        break;
                 }
             }
             return false;
         case U_T_AGCR:
-            if (record->event.pressed && MODS_SHIFT && MODS_CTRL) {
-                TOGGLE_FLAG_AND_PRINT(usb_gcr_auto, "USB GCR auto mode");
+            if (record->event.pressed) {
+                md_led_changed();
+                if (MODS_SHIFT && MODS_CTRL) {
+                    TOGGLE_FLAG_AND_PRINT(usb_gcr_auto, "USB GCR auto mode");
+                }
             }
             return false;
         case MD_BOOT:
             if (record->event.pressed) {
+                last_active_md_key = MD_BOOT;
                 key_timer = timer_read32();
             } else {
-                if (timer_elapsed32(key_timer) >= 500) {
+                if (last_active_md_key == MD_BOOT && timer_elapsed32(key_timer) >= 1500) {
                     reset_keyboard();
+                }
+            }
+            return false;
+        case MD_RESET:
+            if (record->event.pressed) {
+                last_active_md_key = MD_RESET;
+                key_timer = timer_read32();
+            } else {
+                if (last_active_md_key == MD_RESET && timer_elapsed32(key_timer) >= 1500) {
+                    eeconfig_init();
                 }
             }
             return false;
