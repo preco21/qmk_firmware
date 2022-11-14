@@ -51,7 +51,7 @@ enum combos {
 };
 uint16_t COMBO_LEN = COMBO_LENGTH;
 const uint16_t PROGMEM c_mac_ctrl_layer_combo[] = { KC_RGUI, MAC_RAIS, KC_RSFT, COMBO_END };
-const uint16_t PROGMEM c_win_ctrl_layer_combo[] = { KC_RGUI, WIN_RAIS, KC_RSFT, COMBO_END };
+const uint16_t PROGMEM c_win_ctrl_layer_combo[] = { KC_RALT, WIN_RAIS, KC_RSFT, COMBO_END };
 combo_t key_combos[] = {
     [C_MAC_CONTROL_LAYER] = COMBO(c_mac_ctrl_layer_combo, MAC_CTRL),
     [C_WIN_CONTROL_LAYER] = COMBO(c_win_ctrl_layer_combo, WIN_CTRL),
