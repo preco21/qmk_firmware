@@ -75,10 +75,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______,                            _______,                             _______,  _______, KC_HOME, KC_PGDN, KC_END
     ),
     [LAYER_MAC_CONTROL] = LAYOUT(
-        _______, _______, _______, _______,  _______, _______, _______,  _______, _______,  _______, _______, _______, _______, _______, _______,
-        L_T_BR,  L_PSD,   L_BRI,   L_PSI,    L_EDG_I, _______, _______,  _______, U_T_AGCR, _______, _______, _______, _______, _______, _______,
-        L_T_PTD, L_PTP,   L_BRD,   L_PTN,    L_EDG_D, _______, MD_RESET, _______, _______,  _______, _______, _______,          _______, _______,
-        _______, L_T_MD,  L_T_ONF, WIN_DF,   L_EDG_M, MD_BOOT, NK_TOGG,  _______, _______,  _______, _______, _______,          _______, _______,
+        _______, _______, _______, _______,  _______, _______, _______,  _______, _______,  _______, KC_WH_L, KC_BTN3, KC_WH_R, _______, _______,
+        L_T_BR,  L_PSD,   L_BRI,   L_PSI,    L_EDG_I, _______, U_T_AGCR, _______, _______,  KC_WH_U, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______,
+        L_T_PTD, L_PTP,   L_BRD,   L_PTN,    L_EDG_D, _______, MD_RESET, _______, _______,  KC_WH_D, KC_MS_L, KC_MS_R,          _______, _______,
+        _______, L_T_MD,  L_T_ONF, WIN_DF,   L_EDG_M, MD_BOOT, NK_TOGG,  _______, _______,  _______, KC_MS_D, _______,          _______, _______,
         _______, _______, _______,                             _______,                              _______, _______, _______, _______, _______
     ),
     [LAYER_WIN] = LAYOUT(
@@ -89,17 +89,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LGUI, KC_LALT,                            KC_SPC,                             KC_RALT, WIN_RAIS, KC_LEFT, KC_DOWN, KC_RGHT
     ),
     [LAYER_WIN_RAISED] = LAYOUT(
-        KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,    KC_F9,   KC_F10,   KC_F11,   KC_F12,  _______, KC_MUTE,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, KC_PSCR,  KC_SLCK,  KC_PAUS, _______, KC_END,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,  _______,           _______, KC_VOLU,
-        _______, _______, _______, _______, _______, _______, _______, _______, LSFT_GRV, KC_GRV,  _______,  _______,           KC_PGUP, KC_VOLD,
-        _______, _______, _______,                            _______,                             _______,  _______,  KC_HOME, KC_PGDN, KC_END
+        KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,    KC_F9,   KC_F10,   KC_F11,  KC_F12,  _______, KC_MUTE,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, KC_PSCR,  KC_SLCK, KC_PAUS, _______, KC_END,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,  _______,          _______, KC_VOLU,
+        _______, _______, _______, _______, _______, _______, _______, _______, LSFT_GRV, KC_GRV,  _______,  _______,          KC_PGUP, KC_VOLD,
+        _______, _______, _______,                            _______,                             _______,  _______, KC_HOME, KC_PGDN, KC_END
     ),
     [LAYER_WIN_CONTROL] = LAYOUT(
-        _______,  _______, _______, _______, _______, _______, _______, _______,  _______,  _______, _______, _______, _______, _______, _______,
-        L_T_BR,  L_PSD,   L_BRI,   L_PSI,    L_EDG_I, _______, _______, _______,  U_T_AGCR, _______, _______, _______, _______, _______, _______,
-        L_T_PTD, L_PTP,   L_BRD,   L_PTN,    L_EDG_D, _______, MD_RESET, _______, _______,  _______, _______, _______,          _______, _______,
-        _______, L_T_MD,  L_T_ONF, MAC_DF,   L_EDG_M, MD_BOOT, NK_TOGG, _______,  _______,  _______, _______, _______,          _______, _______,
+        _______, _______, _______, _______,  _______, _______, _______,  _______, _______,  _______, KC_WH_L, KC_BTN3, KC_WH_R, _______, _______,
+        L_T_BR,  L_PSD,   L_BRI,   L_PSI,    L_EDG_I, _______, U_T_AGCR, _______, _______,  KC_WH_U, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______,
+        L_T_PTD, L_PTP,   L_BRD,   L_PTN,    L_EDG_D, _______, MD_RESET, _______, _______,  KC_WH_D, KC_MS_L, KC_MS_R,          _______, _______,
+        _______, L_T_MD,  L_T_ONF, WIN_DF,   L_EDG_M, MD_BOOT, NK_TOGG,  _______, _______,  _______, KC_MS_D, _______,          _______, _______,
         _______, _______, _______,                             _______,                              _______, _______, _______, _______, _______
     ),
 };
@@ -385,8 +385,8 @@ led_instruction_t led_instructions[] = {
     { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER, .id0 = 0x7e00ffff, .id1 = 0xffb01c00, .id2 = 0xffffffff, .id3 = 0x1ff, .layer = LAYER_MAC_RAISED },
     { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER, .id0 = 0x7e00ffff, .id1 = 0xffb01c00, .id2 = 0xffffffff, .id3 = 0x1ff, .layer = LAYER_WIN_RAISED },
 
-    { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER, .id0 = 0xc08f9ffe, .id1 = 0xc007e017, .id2 = 0xfffffff8, .id3 = 0x1ff, .layer = LAYER_MAC_CONTROL },
-    { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER, .id0 = 0xc08f8000, .id1 = 0xc007e017, .id2 = 0xfffffff8, .id3 = 0x1ff, .layer = LAYER_WIN_CONTROL },
+    { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER, .id0 = 0xcf2f9c00, .id1 = 0xc0c7e397, .id2 = 0xfffffff8, .id3 = 0x1ff, .layer = LAYER_MAC_CONTROL },
+    { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER, .id0 = 0xcf2f9c00, .id1 = 0xc0c7e397, .id2 = 0xfffffff8, .id3 = 0x1ff, .layer = LAYER_WIN_CONTROL },
 
     // Specific LEDs use specified RGB values while all others are off
     // { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_RGB, .id0 = 0xFF, .id1 = 0x00FF, .id2 = 0x0000FF00, .id3 = 0xFF000000, .r = 75, .g = 150, .b = 225 },
