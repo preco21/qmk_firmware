@@ -377,16 +377,16 @@ led_instruction_t led_instructions[] = {
     // Examples are below
 
     // All LEDs use the user's selected pattern (this is the factory default)
-    { .flags = LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER, .layer = LAYER_MAC },
-    { .flags = LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER, .layer = LAYER_WIN },
+    { .flags = LED_FLAG_MATCH_LAYER | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_USE_RGB, .layer = LAYER_MAC, .r = 172, .g = 255, .b = 233 },
+    { .flags = LED_FLAG_MATCH_LAYER | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_USE_RGB, .layer = LAYER_WIN, .r = 172, .g = 255, .b = 233 },
 
     // Specific LEDs use the user's selected pattern while all others are off
     // { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN, .id0 = 0xFFFFFFFF, .id1 = 0xAAAAAAAA, .id2 = 0x55555555, .id3 = 0x11111111 },
-    { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER, .id0 = 0x7e00ffff, .id1 = 0xffb01c00, .id2 = 0xffffffff, .id3 = 0x1ff, .layer = LAYER_MAC_RAISED },
-    { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER, .id0 = 0x7e00ffff, .id1 = 0xffb01c00, .id2 = 0xffffffff, .id3 = 0x1ff, .layer = LAYER_WIN_RAISED },
+    { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER | LED_FLAG_USE_RGB, .id0 = 0x7e00ffff, .id1 = 0xffb01c00, .id2 = 0xffffffff, .id3 = 0x1ff, .layer = LAYER_MAC_RAISED, .r = 172, .g = 255, .b = 233 },
+    { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER | LED_FLAG_USE_RGB, .id0 = 0x7e00ffff, .id1 = 0xffb01c00, .id2 = 0xffffffff, .id3 = 0x1ff, .layer = LAYER_WIN_RAISED, .r = 172, .g = 255, .b = 233 },
 
-    { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER, .id0 = 0xc08f8000, .id1 = 0xc007e017, .id2 = 0xfffffff8, .id3 = 0x1ff, .layer = LAYER_MAC_CONTROL },
-    { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER, .id0 = 0xc08f8000, .id1 = 0xc007e017, .id2 = 0xfffffff8, .id3 = 0x1ff, .layer = LAYER_WIN_CONTROL },
+    { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER | LED_FLAG_USE_RGB, .id0 = 0xc08f8000, .id1 = 0xc007e017, .id2 = 0xfffffff8, .id3 = 0x1ff, .layer = LAYER_MAC_CONTROL, .r = 172, .g = 255, .b = 233 },
+    { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_ROTATE_PATTERN | LED_FLAG_MATCH_LAYER | LED_FLAG_USE_RGB, .id0 = 0xc08f8000, .id1 = 0xc007e017, .id2 = 0xfffffff8, .id3 = 0x1ff, .layer = LAYER_WIN_CONTROL, .r = 172, .g = 255, .b = 233 },
 
     // Specific LEDs use specified RGB values while all others are off
     // { .flags = LED_FLAG_MATCH_ID | LED_FLAG_USE_RGB, .id0 = 0xFF, .id1 = 0x00FF, .id2 = 0x0000FF00, .id3 = 0xFF000000, .r = 75, .g = 150, .b = 225 },
