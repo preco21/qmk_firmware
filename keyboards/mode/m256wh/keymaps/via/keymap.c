@@ -20,7 +20,7 @@ enum layers {
     L_CTL,
     // TODO: Separate layers for each modifier
     // L_INVT,
-}
+};
 
 #define LSF_GRV LSFT(KC_GRV)
 
